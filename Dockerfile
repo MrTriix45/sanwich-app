@@ -1,5 +1,5 @@
 FROM dunglas/frankenphp:php8.4
-
+RUN apt-get update && apt-get install -y wget
 RUN install-php-extensions \
     pdo_mysql \
     mbstring \
