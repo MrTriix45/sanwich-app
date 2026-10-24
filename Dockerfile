@@ -1,5 +1,7 @@
 FROM dunglas/frankenphp:php8.4
+
 RUN apt-get update && apt-get install -y wget
+
 RUN install-php-extensions \
     pdo_mysql \
     mbstring \
@@ -20,12 +22,14 @@ RUN composer install \
     --optimize-autoloader \
     --no-interaction
 
-RUN mkdir -p storage/framework/cache
-RUN mkdir -p storage/framework/sessions
-RUN mkdir -p storage/framework/views
+RUN mkdir -p storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views
 
 RUN chmod -R 775 storage bootstrap/cache || true
 
+RUN cp .env.example .env || true
+
 EXPOSE 80
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
+CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
