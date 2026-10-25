@@ -31,5 +31,5 @@ RUN chmod -R 775 storage bootstrap/cache || true
 RUN cp .env.example .env || true
 
 EXPOSE 80
-
+HEALTHCHECK NONE
 CMD ["php", "artisan", "serve", "--host", "0.0.0.0", "--port=80"]
